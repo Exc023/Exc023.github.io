@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OneHistory</title>
+  <meta name="description" content="OneHistory 公开项目目录。">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html[data-theme="light"] {
+      --canvas:#F7F5EF; --surface:#FFFFFF; --surface-hover:#ECEEF1; --text:#1F2328; --text-2:#6B7280;
+      --accent:#A87A12; --accent-hover:#8C650E; --hairline:#E4E7EB; --shadow:0 10px 30px rgba(31,35,40,.08);
+    }
+    html[data-theme="dark"] {
+      --canvas:#121414; --surface:#1D201F; --surface-hover:#2A2D2C; --text:#E2DAC6; --text-2:#ACA593;
+      --accent:#D9A441; --accent-hover:#E8B65C; --hairline:#2A2D2C; --shadow:0 16px 40px rgba(0,0,0,.28);
+    }
+    * { box-sizing:border-box; }
+    html, body { margin:0; min-height:100%; }
+    body { background:var(--canvas); color:var(--text); font-family:"Noto Sans SC","Segoe UI",sans-serif; font-size:17px; line-height:1.6; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { color:var(--accent-hover); }
+    .nav { position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:18px; padding:14px 8vw; background:color-mix(in srgb, var(--canvas) 88%, transparent); backdrop-filter:blur(16px); border-bottom:1px solid var(--hairline); }
+    .nav img.logo { height:28px; width:auto; }
+    .grow { flex:1; }
+    button { font:inherit; cursor:pointer; border-radius:999px; border:1px solid var(--hairline); background:var(--surface); color:var(--text); height:40px; padding:0 16px; }
+    button:hover { background:var(--surface-hover); }
+    .hero { padding:56px 8vw 28px; max-width:1200px; }
+    .hero .brand { height:clamp(48px, 8vw, 84px); width:auto; display:block; margin:0 0 22px; }
+    .lede { font-size:clamp(18px, 2.2vw, 22px); color:var(--text-2); max-width:36rem; margin:0 0 20px; }
+    .section { padding:8px 8vw 80px; max-width:1200px; }
+    .tabs { display:flex; gap:8px; margin:0 0 28px; }
+    .tab { background:transparent; border:0; border-radius:0; height:auto; padding:8px 4px 10px; color:var(--text-2); font-size:18px; font-weight:500; border-bottom:2px solid transparent; }
+    .tab[aria-selected="true"] { color:var(--text); border-bottom-color:var(--accent); font-weight:600; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px; }
+    .card { display:flex; flex-direction:column; gap:8px; padding:22px; background:var(--surface); border:1px solid var(--hairline); border-radius:16px; min-height:148px; box-shadow:var(--shadow); color:inherit; transition:transform .15s ease, border-color .15s ease; }
+    .card:hover { transform:translateY(-2px); border-color:var(--accent); color:inherit; }
+    .id { font-family:Outfit, ui-monospace, monospace; font-size:13px; color:var(--accent); letter-spacing:.04em; }
+    .card h3 { margin:0; font-size:20px; font-weight:650; letter-spacing:-.02em; }
+    .card p { margin:0; color:var(--text-2); font-size:15px; flex:1; }
+    .note { color:var(--text-2); font-size:14px; margin:28px 0 0; }
+    .hidden { display:none; }
+    html[data-theme="light"] .logo-dark { display:none; }
+    html[data-theme="dark"] .logo-light { display:none; }
+    @media (max-width:640px) { .nav,.hero,.section { padding-left:20px; padding-right:20px; } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a href="/"><img class="logo logo-light" src="assets/logo.png" alt="OneHistory"><img class="logo logo-dark" src="assets/logo-dark.png" alt="OneHistory"></a>
+    <span class="grow"></span>
+    <a href="https://exc0.top">exc0</a>
+    <button type="button" id="theme">深色</button>
+  </header>
+  <section class="hero">
+    <img class="brand logo-light" src="assets/logo.png" alt="OneHistory">
+    <img class="brand logo-dark" src="assets/logo-dark.png" alt="OneHistory">
+    <p class="lede">个人小品牌。History 线是项目管理和工作流工具，xxxx-xxx 是公开的主体项目。公司未公开资料不在这里。</p>
+    <p><a href="https://github.com/cyx3705">github.com/cyx3705</a></p>
+  </section>
+  <section class="section" id="catalog">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="tools">工作流</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="works">主体项目</button>
+    </div>
+    <div id="panel-tools" class="grid"></div>
+    <div id="panel-works" class="grid hidden"></div>
+    <p class="note">只列出 GitHub 上公开可见的仓库。</p>
+  </section>
+  <script>
+    const tools = [
+      ["2026-023","HistoryVulcan","宿主、命令总线、模块生命周期","https://github.com/cyx3705/2026-023"],
+      ["2026-021","HistoryMercury","活动坞、快捷键、命令工作台","https://github.com/cyx3705/2026-021"],
+      ["2026-020","HistoryJanus","项目与 Git 治理","https://github.com/cyx3705/2026-020"],
+      ["2026-019","HistoryDiana","AI 工作区与模块开发管线","https://github.com/cyx3705/2026-019"],
+      ["2026-024","HistoryMinerva","CAD 模块，注册到 Vulcan","https://github.com/cyx3705/2026-024"],
+      ["HistoryVesta","HistoryVesta","多项目仓库，分支 + worktree","https://github.com/cyx3705/HistoryVesta"],
+      ["0000-001","AIReady","OneHistory AI 优先项目模板","https://github.com/cyx3705/0000-001-AIReady"],
+      ["2026-018","MyAPI","后端模块运行时探索","https://github.com/cyx3705/2026-018"]
+    ];
+    const works = [
+      ["2026-022","WBall","落球对战模拟器","https://github.com/cyx3705/2026-022"],
+      ["2026-016","AD学习","Altium 学习与实验归档","https://github.com/cyx3705/2026-016"],
+      ["2026-012","便携式自动冷萃咖啡机","双舱循环，ESP32-S3 + Windows 上位机","https://github.com/cyx3705/2026-012"],
+      ["2026-010","西门子PLC实践","PLC 实践","https://github.com/cyx3705/2026-010"],
+      ["2026-007","三维坐标机器","三轴直角坐标机器人","https://github.com/cyx3705/2026-007"],
+      ["2026-006","伟立杯手套","绳传动力反馈数据手套","https://github.com/cyx3705/2026-006"],
+      ["2026-003","中型AGV小车","AGV","https://github.com/cyx3705/2026-003"],
+      ["2025-015","弹簧测试机械","弹簧测试","https://github.com/cyx3705/2025-015"],
+      ["2025-014","减速机课程设计","带式输送机传动系统","https://github.com/cyx3705/2025-014"],
+      ["2025-013","三十年战争研究","欧洲政治格局","https://github.com/cyx3705/2025-013"],
+      ["2025-012","小型作业集合","作业统一管理","https://github.com/cyx3705/2025-012"],
+      ["2025-010","墙面瓷砖自动铺设装置","铺砖装置","https://github.com/cyx3705/2025-010"],
+      ["2025-009","沙拉售卖机","售卖机","https://github.com/cyx3705/2025-009"],
+      ["2025-008","机器人手部快换装置","快换装置","https://github.com/cyx3705/2025-008"],
+      ["2025-007","仿生风滚草","仿生机构","https://github.com/cyx3705/2025-007"],
+      ["2025-006","机器人学作业","课程作业","https://github.com/cyx3705/2025-006"],
+      ["2025-005","颠覆式创新","文化课作业","https://github.com/cyx3705/2025-005"],
+      ["2025-004","迎宾机器人","迎宾机器人","https://github.com/cyx3705/2025-004"],
+      ["2025-003","光伏货架车","光伏货架车","https://github.com/cyx3705/2025-003"],
+      ["2025-002","轻型 AGV 小车","轻型 AGV","https://github.com/cyx3705/2025-002"]
+    ];
+    const card = ([id,name,note,url]) => `<a class="card" href="${url}"><span class="id">${id}</span><h3>${name}</h3><p>${note}</p></a>`;
+    document.getElementById("panel-tools").innerHTML = tools.map(card).join("");
+    document.getElementById("panel-works").innerHTML = works.map(card).join("");
+    const root = document.documentElement, btn = document.getElementById("theme");
+    const apply = t => { root.setAttribute("data-theme", t); btn.textContent = t === "dark" ? "深色" : "浅色"; localStorage.setItem("oh-theme", t); };
+    apply(localStorage.getItem("oh-theme") || "dark");
+    btn.onclick = () => apply(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    document.querySelectorAll(".tab").forEach(b => b.onclick = () => {
+      document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === b));
+      const id = b.dataset.tab;
+      document.getElementById("panel-tools").classList.toggle("hidden", id !== "tools");
+      document.getElementById("panel-works").classList.toggle("hidden", id !== "works");
+    });
+  </script>
+</body>
+</html>
