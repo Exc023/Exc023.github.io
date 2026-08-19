@@ -29,9 +29,15 @@
     .grow { flex:1; }
     button { font:inherit; cursor:pointer; border-radius:999px; border:1px solid var(--hairline); background:var(--surface); color:var(--text); height:40px; padding:0 16px; }
     button:hover { background:var(--surface-hover); }
-    .hero { padding:56px 8vw 28px; max-width:1200px; }
-    .hero .brand { height:clamp(48px, 8vw, 84px); width:auto; display:block; margin:0 0 22px; }
+    .hero { padding:56px 8vw 36px; max-width:1200px; display:flex; align-items:center; justify-content:space-between; gap:48px; }
+    .hero-copy { flex:1; min-width:0; }
+    .hero-mark { flex:0 0 auto; }
+    .hero .brand { height:clamp(72px, 12vw, 140px); width:auto; display:block; margin:0; }
     .lede { font-size:clamp(18px, 2.2vw, 22px); color:var(--text-2); max-width:36rem; margin:0 0 20px; }
+    @media (max-width:720px) {
+      .hero { flex-direction:column-reverse; align-items:flex-start; gap:24px; }
+      .hero .brand { height:56px; }
+    }
     .section { padding:8px 8vw 80px; max-width:1200px; }
     .tabs { display:flex; gap:8px; margin:0 0 28px; }
     .tab { background:transparent; border:0; border-radius:0; height:auto; padding:8px 4px 10px; color:var(--text-2); font-size:18px; font-weight:500; border-bottom:2px solid transparent; }
@@ -57,10 +63,14 @@
     <button type="button" id="theme">深色</button>
   </header>
   <section class="hero">
-    <img class="brand logo-light" src="assets/logo.png" alt="OneHistory">
-    <img class="brand logo-dark" src="assets/logo-dark.png" alt="OneHistory">
-    <p class="lede">个人小品牌。History 线是项目管理和工作流工具，xxxx-xxx 是公开的主体项目。公司未公开资料不在这里。</p>
-    <p><a href="https://github.com/cyx3705">github.com/cyx3705</a></p>
+    <div class="hero-copy">
+      <p class="lede">个人小品牌。History 线是项目管理和工作流工具，xxxx-xxx 是公开的主体项目。公司未公开资料不在这里。</p>
+      <p><a href="https://github.com/cyx3705">github.com/cyx3705</a></p>
+    </div>
+    <div class="hero-mark">
+      <img class="brand logo-light" src="assets/logo.png" alt="OneHistory">
+      <img class="brand logo-dark" src="assets/logo-dark.png" alt="OneHistory">
+    </div>
   </section>
   <section class="section" id="catalog">
     <div class="tabs" role="tablist">
