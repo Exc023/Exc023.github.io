@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>exc0 · OneHistory</title>
   <meta name="description" content="exc0 远程代理。OneHistory 个人品牌与公开项目目录。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root, html[data-theme="light"] {
       --canvas: #F5F6F7;
@@ -13,134 +16,197 @@
       --surface-hover: #ECEEF1;
       --text: #1F2328;
       --text-2: #6B7280;
-      --text-disabled: #A1A7B0;
       --accent: #A87A12;
       --accent-hover: #8C650E;
       --accent-soft: #FAF0D8;
       --hairline: #E4E7EB;
       --border: #D8DCE2;
       --on-accent: #FFFFFF;
+      --shadow: 0 10px 30px rgba(31, 35, 40, 0.08);
     }
     html[data-theme="dark"] {
-      --canvas: #1A1D1C;
+      --canvas: #121414;
       --surface: #1D201F;
       --surface-alt: #242625;
       --surface-hover: #2A2D2C;
       --text: #E2DAC6;
       --text-2: #ACA593;
-      --text-disabled: #77746A;
       --accent: #D9A441;
       --accent-hover: #E8B65C;
       --accent-soft: #33342A;
       --hairline: #2A2D2C;
       --border: #343736;
       --on-accent: #171918;
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; }
     body {
       background: var(--canvas);
       color: var(--text);
-      font-family: "Microsoft YaHei UI", "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
-      font-size: 13px;
-      line-height: 1.45;
+      font-family: "Noto Sans SC", "Microsoft YaHei UI", "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
     }
-    .top {
-      height: 32px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 12px;
-      background: var(--surface);
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); }
+    .nav {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; gap: 20px;
+      padding: 16px 8vw;
+      background: color-mix(in srgb, var(--canvas) 88%, transparent);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--hairline);
     }
-    .brand { font-weight: 600; }
-    .sep { color: var(--text-disabled); }
+    .wordmark {
+      font-family: Outfit, "Noto Sans SC", sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+    .nav-links { display: flex; gap: 18px; margin-left: 12px; font-size: 15px; color: var(--text-2); }
+    .nav-links a { color: inherit; }
+    .nav-links a:hover { color: var(--text); }
     .grow { flex: 1; }
-    .muted { color: var(--text-2); }
-    .mono { font-family: Consolas, "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; }
     button {
-      height: 28px;
-      min-width: 28px;
-      padding: 0 10px;
-      border-radius: 8px;
+      font: inherit;
+      cursor: pointer;
+      border-radius: 999px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      font: inherit;
-      cursor: pointer;
+      height: 40px;
+      padding: 0 16px;
     }
     button:hover { background: var(--surface-hover); }
-    button.primary {
-      background: var(--accent);
-      color: var(--on-accent);
-      border-color: transparent;
-      font-weight: 400;
+    .hero {
+      padding: 72px 8vw 40px;
+      max-width: 1200px;
     }
-    button.primary:hover { background: var(--accent-hover); }
-    button.tab[aria-selected="true"] {
-      background: var(--accent-soft);
-      border-color: transparent;
+    .kicker {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-size: 13px;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+    }
+    h1 {
+      font-family: Outfit, "Noto Sans SC", sans-serif;
+      font-size: clamp(48px, 8vw, 84px);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+      margin: 0 0 20px;
+    }
+    .lede {
+      font-size: clamp(18px, 2.2vw, 22px);
+      color: var(--text-2);
+      max-width: 38rem;
+      margin: 0 0 28px;
+    }
+    .contacts { display: flex; flex-wrap: wrap; gap: 12px 20px; font-size: 16px; }
+    .section { padding: 12px 8vw 80px; max-width: 1200px; }
+    .tabs { display: flex; gap: 8px; margin: 0 0 28px; }
+    .tab {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      height: auto;
+      padding: 8px 4px 10px;
+      color: var(--text-2);
+      font-size: 18px;
+      font-weight: 500;
+      box-shadow: none;
+      border-bottom: 2px solid transparent;
+    }
+    .tab[aria-selected="true"] {
+      color: var(--text);
+      border-bottom-color: var(--accent);
+      background: transparent;
       font-weight: 600;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { color: var(--accent-hover); text-decoration: underline; }
-    main { padding: 12px; max-width: 960px; margin: 0 auto; }
-    .lead { color: var(--text-2); margin: 0 0 12px; }
-    .tabs { display: flex; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; padding: 6px 8px; vertical-align: top; border-bottom: 1px solid var(--hairline); }
-    th { color: var(--text-2); font-weight: 600; font-size: 11px; }
-    td.num { font-family: Consolas, ui-monospace, monospace; font-size: 12px; white-space: nowrap; }
-    caption { text-align: left; font-weight: 600; padding: 0 0 8px; caption-side: top; }
-    .note { color: var(--text-2); font-size: 11px; margin: 12px 0 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 22px 22px 20px;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 16px;
+      min-height: 148px;
+      box-shadow: var(--shadow);
+      color: inherit;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      color: inherit;
+    }
+    .id {
+      font-family: Outfit, ui-monospace, monospace;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .card p { margin: 0; color: var(--text-2); font-size: 15px; flex: 1; }
+    .note { color: var(--text-2); font-size: 14px; margin: 28px 0 0; }
     .hidden { display: none; }
-    @media (max-width: 520px) {
-      .hide-sm { display: none; }
+    @media (max-width: 640px) {
+      .nav { padding: 12px 20px; }
+      .nav-links { display: none; }
+      .hero, .section { padding-left: 20px; padding-right: 20px; }
+      .hero { padding-top: 40px; }
     }
   </style>
 </head>
 <body>
-  <header class="top">
-    <span class="brand">exc0</span>
-    <span class="sep">/</span>
-    <span>OneHistory</span>
+  <header class="nav">
+    <div class="wordmark">exc0</div>
+    <nav class="nav-links">
+      <a href="#catalog">项目</a>
+      <a href="https://github.com/cyx3705">cyx3705</a>
+      <a href="https://github.com/Exc023">GitHub</a>
+      <a href="mailto:exc0@outlook.com">邮件</a>
+    </nav>
     <span class="grow"></span>
     <button type="button" id="theme" title="切换浅色或深色">深色</button>
   </header>
-  <main>
-    <p class="lead">远程代理，一台自己的电脑。个人小品牌是 OneHistory。下面只列 GitHub 上公开可见的仓库；公司资料未公开的不在这里。</p>
-    <p class="lead mono">
-      <a href="https://github.com/Exc023">Exc023</a>
-      · <a href="mailto:exc0@outlook.com">exc0@outlook.com</a>
-      · 主体项目 <a href="https://github.com/cyx3705">cyx3705</a>
-    </p>
+
+  <section class="hero">
+    <p class="kicker">OneHistory</p>
+    <h1>exc0</h1>
+    <p class="lede">一台自己的电脑，一个对外的名字。这里是远程代理 exc0 的主页，也是 OneHistory 公开项目的目录。</p>
+    <div class="contacts">
+      <a href="https://github.com/Exc023">github.com/Exc023</a>
+      <a href="mailto:exc0@outlook.com">exc0@outlook.com</a>
+      <a href="https://github.com/cyx3705">主体项目 · cyx3705</a>
+    </div>
+  </section>
+
+  <section class="section" id="catalog">
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" aria-selected="true" data-tab="tools">OneHistory</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="works">主体项目</button>
     </div>
+    <div id="panel-tools" class="grid"></div>
+    <div id="panel-works" class="grid hidden"></div>
+    <p class="note" id="footnote">只列出 GitHub 上公开可见的仓库。公司资料未公开的不在这里。</p>
+  </section>
 
-    <section id="panel-tools">
-      <table>
-        <caption>项目管理与工作流工具</caption>
-        <thead>
-          <tr><th>编号</th><th>名称</th><th class="hide-sm">说明</th></tr>
-        </thead>
-        <tbody id="tools-body"></tbody>
-      </table>
-    </section>
-
-    <section id="panel-works" class="hidden">
-      <table>
-        <caption>主体项目 · xxxx-xxx</caption>
-        <thead>
-          <tr><th>编号</th><th>名称</th><th class="hide-sm">说明</th></tr>
-        </thead>
-        <tbody id="works-body"></tbody>
-      </table>
-      <p class="note">未写进 README 的模板仓、以及未公开仓库都不列出。</p>
-    </section>
-  </main>
   <script>
     const tools = [
       ["2026-023", "HistoryVulcan", "宿主、命令总线、模块生命周期", "https://github.com/cyx3705/2026-023"],
@@ -174,13 +240,14 @@
       ["2025-003", "光伏货架车", "光伏货架车", "https://github.com/cyx3705/2025-003"],
       ["2025-002", "轻型 AGV 小车", "轻型 AGV", "https://github.com/cyx3705/2025-002"]
     ];
-    function rows(list) {
-      return list.map(([id, name, note, url]) =>
-        `<tr><td class="num"><a href="${url}">${id}</a></td><td>${name}</td><td class="hide-sm muted">${note}</td></tr>`
-      ).join("");
-    }
-    document.getElementById("tools-body").innerHTML = rows(tools);
-    document.getElementById("works-body").innerHTML = rows(works);
+    const card = ([id, name, note, url]) =>
+      `<a class="card" href="${url}">
+        <span class="id">${id}</span>
+        <h3>${name}</h3>
+        <p>${note}</p>
+      </a>`;
+    document.getElementById("panel-tools").innerHTML = tools.map(card).join("");
+    document.getElementById("panel-works").innerHTML = works.map(card).join("");
 
     const root = document.documentElement;
     const themeBtn = document.getElementById("theme");
